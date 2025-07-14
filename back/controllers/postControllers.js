@@ -34,8 +34,8 @@ const addPost = async (req, res) => {
 
     res.status(201).json({ post: rows[0] });
   } catch (err) {
-    console.error('Database error:', err);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error('Database error:', err);   // <--- log full error here
+    res.status(500).json({ error: err.message || 'Internal server error' });
   }
 };
 
