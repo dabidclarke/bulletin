@@ -1,0 +1,42 @@
+const mysql = require('mysql2/promise');
+
+// Set up MySQL connection pool
+const pool = mysql.createPool({
+  host: 'webcourse.cs.nuim.ie',
+  user: 'u240555',
+  password: 'aoNgaKei5odiNgo1',
+  database: 'cs230_u240555',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
+
+const addPost = async (req, res) => {
+  const { content, author_id, is_reply } = req.body;
+
+  if (!content || !author_id) {
+    return res.status(400).json({ error: 'Missing content or author_id' });
+  }
+
+  try {
+    const [result] = await pool.execute(
+      `INSERT INTO bbs_posts (content, author_id, is_reply, replies)
+       VALUES (?, ?, ?, JSON_ARRAY())`,
+      [content, author_id, is_reply ? 1 : 0]
+    );
+
+    const insertedId = result.insertId;
+
+    const [rows] = await pool.execute(
+      `SELECT id, content, author_id, date, is_reply, replies FROM bbs_posts WHERE id = ?`,
+      [insertedId]
+    );
+
+    res.status(201).json({ post: rows[0] });
+  } catch (err) {
+    console.error('Database error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+module.exports = { addPost };
