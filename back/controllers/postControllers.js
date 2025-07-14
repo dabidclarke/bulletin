@@ -2,10 +2,10 @@ const mysql = require('mysql2/promise');
 
 // Set up MySQL connection pool
 const pool = mysql.createPool({
-  host: 'webcourse.cs.nuim.ie',
-  user: 'u240555',
-  password: 'aoNgaKei5odiNgo1',
-  database: 'cs230_u240555',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
