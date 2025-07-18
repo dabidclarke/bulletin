@@ -4,7 +4,7 @@ import PostForm from './postForm';
 function App() {
   return (
     <div>
-      <PostForm />
+      <h1>Test!</h1>
     </div>
   );
 }
