@@ -9,9 +9,13 @@
     "node.js": "^0.0.1-security"
   },
   "homepage": "https://dabidclarke.github.io/bulletin",
-  "scripts": {
+"scripts": {
+  "start": "react-scripts start",
+  "build": "react-scripts build",
   "predeploy": "npm run build",
-  "deploy": "gh-pages -d build"
+  "deploy": "gh-pages -d build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject"
 }
   
 }
